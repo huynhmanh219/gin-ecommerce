@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  # mysql:
+  #   image: mysql:8.0
+  #   container_name: gin_mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: huynhmanh221199
+  #     MYSQL_DATABASE: go_user_management
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #   networks:
+  #     - gin_network
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 20s
+  #     retries: 10
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: gin_redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - gin_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  gin_network:
+    driver: bridge
+
+
+# # 1. Dừng + xóa redis-container cũ
+# docker stop redis-container
+# docker rm redis-container
+
+# # 2. Dừng các services cũ
+# docker-compose down
+
+# # 3. Khởi động lại từ compose
+# docker-compose up -d
+
+# # 4. Kiểm tra
+# docker ps
+
+# docker run -d --name gin_redis -p 6379:6379 redis:7-alpine
