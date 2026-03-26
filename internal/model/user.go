@@ -10,6 +10,9 @@ type User struct {
 	IsActive  bool   	`gorm:"default:true" json:"is_active"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time	`json:"updated_at"`
+
+	Cart    *Cart   `gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE" json:"cart,omitempty"`
+	Orders  []Order `gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE" json:"orders,omitempty"`
 }
 
 type UserProFile struct{

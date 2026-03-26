@@ -8,13 +8,16 @@ import (
 )
 
 func RunMigrations(db *gorm.DB)error{
-	if err:= db.AutoMigrate(&model.User{}); err != nil{
-		return fmt.Errorf("Migration failed: %w",err)
-	}
-	if err:= db.AutoMigrate(&model.AuditLog{}); err != nil{
-		return fmt.Errorf("Migration failed: %w",err)
-	}
-	if err:= db.AutoMigrate(&model.UserProFile{}); err != nil{
+	if err:= db.AutoMigrate(
+		&model.User{},
+        &model.Product{},
+        &model.Cart{},
+        &model.CartItem{},
+        &model.Order{},
+        &model.OrderItem{},
+        &model.Payment{},
+        &model.InventoryLog{},
+		); err != nil{
 		return fmt.Errorf("Migration failed: %w",err)
 	}
 	fmt.Println("Migration completed")
