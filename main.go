@@ -35,6 +35,7 @@ func main() {
 
 	r := gin.Default()
 	routes.RegisterUserRoutes(r, db, redisClient, logger)
+	routes.RegisterProductRoutes(r,db,redisClient,logger)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.Run(":3000")
